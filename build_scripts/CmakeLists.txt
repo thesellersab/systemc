@@ -1,0 +1,31 @@
+cmake_minimum_required(VERSION 3.14.0)
+set(CMAKE_C_COMPILER gcc)
+set(CMAKE_CXX_COMPILER g++)
+
+
+project(hello_systemc)
+
+set(CMAKE_VERBOSE_MAKEFILE on)
+set(target_name "hello.exe")
+
+set(SYSTEM_IINSTALL_PATH "/home/shahzada/systemc/install")
+
+set (SYSTEMC_INCLUDE ${SYSTEM_IINSTALL_PATH}/include/)
+
+set (SOURCE_INCLUDES "./src/")
+
+set (SYSTEMC_LIB_PATH ${SYSTEM_IINSTALL_PATH}/lib-linux64/)
+
+## set the source files
+file(GLOB SOURCES "src/*.cpp")
+
+## set include path : .h .hpp
+include_directories(${SYSTEMC_INCLUDE} ${SOURCE_INCLUDES})
+
+## set include library paths : .so
+link_directories(${SYSTEMC_LIB_PATH})
+
+add_executable(${target_name} ${SOURCES})
+
+## link to shared library systemc: -lsystemc
+target_link_libraries(${target_name} systemc m)
